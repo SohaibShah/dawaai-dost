@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- LIGHT THEME (Use Commas!) --- */
+    --background: 248, 250, 252; 
+    --surface: 255, 255, 255;    
+    --surface-highlight: 241, 245, 249; 
+    
+    --primary: 14, 165, 233;     
+    --primary-fg: 255, 255, 255; 
+    
+    --secondary: 99, 102, 241;   
+    --secondary-fg: 255, 255, 255;
+
+    --success: 16, 185, 129;     
+    --success-bg: 236, 253, 245; 
+    
+    --warning: 245, 158, 11;     
+    --warning-bg: 255, 251, 235; 
+    
+    --error: 244, 63, 94;        
+    --error-bg: 255, 241, 242;   
+
+    --text-main: 15, 23, 42;     
+    --text-muted: 100, 116, 139; 
+    --border: 226, 232, 240;     
+  }
+
+  .dark {
+    /* --- DARK THEME (Use Commas!) --- */
+    --background: 15, 23, 42;    
+    --surface: 30, 41, 59;       
+    --surface-highlight: 51, 65, 85; 
+    
+    --primary: 56, 189, 248;     
+    --primary-fg: 15, 23, 42;    
+    
+    --secondary: 129, 140, 248;  
+    --secondary-fg: 15, 23, 42;
+
+    --success: 52, 211, 153;     
+    --success-bg: 6, 78, 59;     
+    
+    --warning: 251, 191, 36;     
+    --warning-bg: 120, 53, 15;   
+    
+    --error: 251, 113, 133;      
+    --error-bg: 136, 19, 55;     
+
+    --text-main: 241, 245, 249;  
+    --text-muted: 148, 163, 184; 
+    --border: 51, 65, 85;        
+  }
+}
