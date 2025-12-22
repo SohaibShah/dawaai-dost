@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import LocalizedText from './LocalizedText';
 import { MotiView, AnimatePresence } from 'moti';
@@ -9,6 +9,7 @@ import { useLocalization } from '@/utils/useLocalization';
 import { useTextScale } from '@/utils/useTextScale';
 import { useStore } from '../store/useStore'; // Need store to check specific doses
 import * as Speech from 'expo-speech';
+import { useOnboardingStore } from '@/store/onboardingStore';
 
 interface Props {
   med: any;
@@ -33,6 +34,8 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
   const [isExpanded, setIsExpanded] = useState(false);
   const getDoseStatus = useStore(state => state.getDoseStatus);
   const getTakenCount = useStore(state => state.getTakenCount);
+  const { setTargetIfEmpty } = useOnboardingStore();
+  const cardRef = useRef<any>(null);
   
   // Calculate Progress
   const totalSlots = med.timeSlots.length;
@@ -60,8 +63,20 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
     onDosePress(time, isTaken);
   };
 
+  useEffect(() => {
+    // Measure card position once for onboarding spotlight
+    setTimeout(() => {
+      if (cardRef.current && cardRef.current.measureInWindow) {
+        cardRef.current.measureInWindow((x: number, y: number, width: number, height: number) => {
+          setTargetIfEmpty('medicineCard', { x, y, width, height, borderRadius: 24 });
+        });
+      }
+    }, 400);
+  }, []);
+
   return (
     <MotiView
+      ref={cardRef}
       layout={Layout.springify()} 
       animate={{ 
         scale: isFullyComplete ? 0.98 : 1,
@@ -133,6 +148,14 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
                       ? 'bg-emerald-500 border-emerald-600' // Taken Style
                       : `${style.bg} ${style.border}`         // Pending Style
                   }`}
+                  ref={i === 0 ? (el) => {
+                    // Measure first pill for spotlight target
+                    if (el && (el as any).measureInWindow) {
+                      (el as any).measureInWindow((x: number, y: number, width: number, height: number) => {
+                        setTargetIfEmpty('dosePill', { x, y, width, height, borderRadius: height / 2 });
+                      });
+                    }
+                  } : undefined}
                 >
                   {isTaken ? (
                     <MotiView from={{ scale: 0 }} animate={{ scale: 1 }}>

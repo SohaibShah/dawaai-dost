@@ -14,6 +14,7 @@ import { Layout } from 'react-native-reanimated'; // For smooth list reordering
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { NotificationService } from '@/services/NotificationService';
+import { useOnboardingStore } from '@/store/onboardingStore';
 
 
 // --- Semantic Section Title ---
@@ -56,6 +57,8 @@ export default function HomeScreen() {
 
   // INTELLIGENCE
   const [suggestion, setSuggestion] = useState<{ id: string, text: string } | null>(null);
+  const { setTargetIfEmpty } = useOnboardingStore();
+  const suggestionRef = useRef<any>(null);
 
   // NOTIFICATION LISTENER REFS
   const responseListener = useRef<Notifications.Subscription | null>(null);
@@ -96,6 +99,17 @@ export default function HomeScreen() {
   }, []);
 
   useEffect(() => { setHour(new Date().getHours()); }, []);
+
+  useEffect(() => {
+    // Measure suggestion banner after initial render
+    setTimeout(() => {
+      if (suggestionRef.current && suggestionRef.current.measureInWindow) {
+        suggestionRef.current.measureInWindow((x: number, y: number, width: number, height: number) => {
+          setTargetIfEmpty('suggestionBanner', { x, y, width, height, borderRadius: 24 });
+        });
+      }
+    }, 500);
+  }, [suggestion]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -273,6 +287,7 @@ export default function HomeScreen() {
               from={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="bg-surface dark:bg-dark-surface border border-purple-200 dark:border-purple-800 p-4 rounded-3xl mb-6 shadow-sm flex-row items-center"
+              ref={suggestionRef}
             >
               <View className="bg-purple-100 dark:bg-purple-900 p-2.5 rounded-lg mr-3">
                 <Zap size={18} color={settings.theme === 'dark' ? '#d8b4fe' : '#9333EA'} />

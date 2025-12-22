@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { MotiView } from 'moti';
 import { Plus } from 'lucide-react-native';
+import { useOnboardingStore } from '@/store/onboardingStore';
 
 export default function AddButton({ onPress }: { onPress: () => void }) {
   const [isPressed, setIsPressed] = useState(false);
+  const ref = useRef<any>(null);
+  const { setTargetIfEmpty } = useOnboardingStore();
+
+  const measure = () => {
+    if (ref.current && ref.current.measureInWindow) {
+      ref.current.measureInWindow((x: number, y: number, width: number, height: number) => {
+        setTargetIfEmpty('addButton', { x, y, width, height, borderRadius: width / 2 });
+      });
+    }
+  };
+
+  useEffect(() => {
+    // Measure on mount
+    setTimeout(measure, 300);
+  }, []);
 
   return (
     <Pressable
+      ref={ref}
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}

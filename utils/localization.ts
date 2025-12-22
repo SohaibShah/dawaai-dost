@@ -705,6 +705,132 @@ export const STRINGS: Record<string, LocalizedString> = {
     en: { text: 'Settings saved', tts: 'Settings saved successfully', ttsModel: 'en-US' },
     ur: { text: 'سیٹنگز محفوظ ہو گئیں', tts: 'सेटिंग्स सफलतापूर्वक सहेजी गईं', ttsModel: 'hi-IN' },
   },
+
+  // ============ Onboarding ============
+  'onboarding_welcome': {
+    en: { text: 'Welcome to Dawaai Dost', tts: 'Welcome to Dawaai Dost, your medicine companion', ttsModel: 'en-US' },
+    ur: { text: 'دوائی دوست میں خوش آمدید', tts: 'दवाई दोस्त में आपका स्वागत है', ttsModel: 'hi-IN' },
+  },
+  'onboarding_subtitle': {
+    en: { text: 'Your trusted medicine companion', tts: 'Your trusted medicine companion', ttsModel: 'en-US' },
+    ur: { text: 'آپ کا قابل اعتماد دوا ساتھی', tts: 'आपका भरोसेमंद दवा साथी', ttsModel: 'hi-IN' },
+  },
+  'onboarding_lets_begin': {
+    en: { text: "Let's Begin", tts: "Let's begin setting up your app", ttsModel: 'en-US' },
+    ur: { text: 'آئیے شروع کریں', tts: 'चलिए शुरू करते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_skip': {
+    en: { text: 'Skip', tts: 'Skip onboarding', ttsModel: 'en-US' },
+    ur: { text: 'چھوڑیں', tts: 'छोड़ें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_next': {
+    en: { text: 'Next', tts: 'Next', ttsModel: 'en-US' },
+    ur: { text: 'اگلا', tts: 'अगला', ttsModel: 'hi-IN' },
+  },
+  'onboarding_back': {
+    en: { text: 'Back', tts: 'Go back', ttsModel: 'en-US' },
+    ur: { text: 'واپس', tts: 'वापस जाएँ', ttsModel: 'hi-IN' },
+  },
+  'onboarding_finish': {
+    en: { text: 'Get Started', tts: 'Get started with the app', ttsModel: 'en-US' },
+    ur: { text: 'شروع کریں', tts: 'शुरू करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_language_title': {
+    en: { text: 'Choose Your Language', tts: 'Choose your preferred language for the app', ttsModel: 'en-US' },
+    ur: { text: 'اپنی زبان منتخب کریں', tts: 'अपनी भाषा चुनें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_language_description': {
+    en: { text: 'Select the language you are most comfortable with', tts: 'Select the language you are most comfortable with', ttsModel: 'en-US' },
+    ur: { text: 'وہ زبان منتخب کریں جو آپ کے لیے سب سے آسان ہو', tts: 'वह भाषा चुनें जो आपके लिए सबसे आसान हो', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_title': {
+    en: { text: 'Voice Assistant', tts: 'Voice assistant settings', ttsModel: 'en-US' },
+    ur: { text: 'آواز کا معاون', tts: 'आवाज़ सहायक', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_description': {
+    en: { text: 'Enable voice guidance to help you navigate the app', tts: 'Enable voice guidance to help you navigate the app', ttsModel: 'en-US' },
+    ur: { text: 'ایپ میں راستہ دکھانے کے لیے آواز کی رہنمائی فعال کریں', tts: 'ऐप में रास्ता दिखाने के लिए आवाज़ की मार्गदर्शिका सक्षम करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_enable': {
+    en: { text: 'Enable Voice Assistant', tts: 'Enable voice assistant', ttsModel: 'en-US' },
+    ur: { text: 'آواز کا معاون فعال کریں', tts: 'आवाज़ सहायक सक्षम करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_mode_title': {
+    en: { text: 'Voice Mode', tts: 'Select voice mode', ttsModel: 'en-US' },
+    ur: { text: 'آواز کا طریقہ', tts: 'आवाज़ मोड', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_dual': {
+    en: { text: 'Dual Language', tts: 'Dual language. Speaks in both English and Urdu', ttsModel: 'en-US' },
+    ur: { text: 'دو زبانیں', tts: 'दोहरी भाषा। अंग्रेजी और उर्दू दोनों में बोलता है', ttsModel: 'hi-IN' },
+  },
+  'onboarding_voice_urdu_only': {
+    en: { text: 'Urdu Only', tts: 'Urdu only. Speaks only in Urdu', ttsModel: 'en-US' },
+    ur: { text: 'صرف اردو', tts: 'केवल उर्दू। केवल उर्दू में बोलता है', ttsModel: 'hi-IN' },
+  },
+  'onboarding_features_title': {
+    en: { text: 'Key Features', tts: 'Let me show you the key features of the app', ttsModel: 'en-US' },
+    ur: { text: 'اہم خصوصیات', tts: 'मैं आपको ऐप की मुख्य सुविधाएं दिखाता हूं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_features_caption': {
+    en: { text: 'Let’s explore how to use the app effectively', tts: 'Let’s explore how to use the app effectively', ttsModel: 'en-US' },
+    ur: { text: 'آئیے دیکھتے ہیں ایپ کو مؤثر طریقے سے کیسے استعمال کریں', tts: 'चलो देखते हैं ऐप को असरदार तरीके से कैसे इस्तेमाल करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_add_medicine_title': {
+    en: { text: 'Add Your Medicines', tts: 'Add your medicines by tapping the plus button', ttsModel: 'en-US' },
+    ur: { text: 'اپنی دوائیں شامل کریں', tts: 'प्लस बटन को टैप करके अपनी दवाएं जोड़ें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_add_medicine_description': {
+    en: { text: 'Tap the + button at the bottom to add a new medicine. You can enter the name, dosage, and schedule.', tts: 'Tap the plus button at the bottom to add a new medicine. You can enter the name, dosage, and schedule', ttsModel: 'en-US' },
+    ur: { text: 'نئی دوا شامل کرنے کے لیے نیچے + بٹن دبائیں۔ آپ نام، خوراک اور شیڈول درج کر سکتے ہیں۔', tts: 'नई दवा जोड़ने के लिए नीचे प्लस बटन दबाएं। आप नाम, खुराक और शेड्यूल दर्ज कर सकते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_mark_dose_title': {
+    en: { text: 'Mark Doses Taken', tts: 'Mark doses as taken by tapping the time slot', ttsModel: 'en-US' },
+    ur: { text: 'لی گئی خوراکوں کو نشان زد کریں', tts: 'समय स्लॉट को टैप करके खुराक को लिया गया चिह्नित करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_mark_dose_description': {
+    en: { text: 'Tap on a time slot pill to mark that dose as taken. The color will change to show completion.', tts: 'Tap on a time slot pill to mark that dose as taken. The color will change to show completion', ttsModel: 'en-US' },
+    ur: { text: 'اس خوراک کو لی گئی کے طور پر نشان زد کرنے کے لیے ٹائم سلاٹ گولی پر تھپتھپائیں۔ تکمیل ظاہر کرنے کے لیے رنگ بدل جائے گا۔', tts: 'उस खुराक को लिया गया चिह्नित करने के लिए टाइम स्लॉट पिल पर टैप करें। पूर्णता दिखाने के लिए रंग बदल जाएगा', ttsModel: 'hi-IN' },
+  },
+  'onboarding_edit_medicine_title': {
+    en: { text: 'Edit or Delete', tts: 'Edit or delete medicines by holding on the card', ttsModel: 'en-US' },
+    ur: { text: 'ترمیم یا حذف', tts: 'कार्ड को होल्ड करके दवाएं संपादित या हटाएं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_edit_medicine_description': {
+    en: { text: 'Press and hold anywhere on a medicine card to see options. You can edit details or delete the medicine.', tts: 'Press and hold anywhere on a medicine card to see options. You can edit details or delete the medicine', ttsModel: 'en-US' },
+    ur: { text: 'اختیارات دیکھنے کے لیے دوا کارڈ پر کہیں بھی دبائیں اور دبائے رکھیں۔ آپ تفصیلات میں ترمیم یا دوا حذف کر سکتے ہیں۔', tts: 'विकल्प देखने के लिए दवा कार्ड पर कहीं भी दबाएं और होल्ड करें। आप विवरण संपादित कर सकते हैं या दवा हटा सकते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_smart_suggestions_title': {
+    en: { text: 'Smart Suggestions', tts: 'Smart suggestions help you stay on track', ttsModel: 'en-US' },
+    ur: { text: 'ہوشیار تجاویز', tts: 'स्मार्ट सुझाव आपको ट्रैक पर रखने में मदद करते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_smart_suggestions_description': {
+    en: { text: 'The app will show you medicines that are due soon at the top of your list with a "Take Now" button.', tts: 'The app will show you medicines that are due soon at the top of your list with a Take Now button', ttsModel: 'en-US' },
+    ur: { text: 'ایپ آپ کی فہرست کے اوپر جلد آنے والی دوائیں "اب لیں" بٹن کے ساتھ دکھائے گی۔', tts: 'ऐप आपकी सूची के शीर्ष पर जल्द आने वाली दवाएं "अब लें" बटन के साथ दिखाएगा', ttsModel: 'hi-IN' },
+  },
+  'onboarding_profile_title': {
+    en: { text: 'Your Profile', tts: 'Customize your profile and settings', ttsModel: 'en-US' },
+    ur: { text: 'آپ کی پروفائل', tts: 'अपनी प्रोफ़ाइल और सेटिंग्स को अनुकूलित करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_profile_description': {
+    en: { text: 'Visit the Profile tab to change your settings, adjust text size, theme, and more. You can also replay this tutorial anytime.', tts: 'Visit the Profile tab to change your settings, adjust text size, theme, and more. You can also replay this tutorial anytime', ttsModel: 'en-US' },
+    ur: { text: 'اپنی ترتیبات تبدیل کرنے، متن کا سائز، تھیم اور مزید ایڈجسٹ کرنے کے لیے پروفائل ٹیب ملاحظہ کریں۔ آپ یہ ٹیوٹوریل کبھی بھی دوبارہ چلا سکتے ہیں۔', tts: 'अपनी सेटिंग्स बदलने, पाठ आकार, थीम और अधिक समायोजित करने के लिए प्रोफ़ाइल टैब पर जाएं। आप यह ट्यूटोरियल कभी भी दोबारा चला सकते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_ready_title': {
+    en: { text: "You're All Set!", tts: "You're all set! Let's start managing your medicines", ttsModel: 'en-US' },
+    ur: { text: 'آپ تیار ہیں!', tts: 'आप तैयार हैं! चलिए अपनी दवाओं का प्रबंधन शुरू करते हैं', ttsModel: 'hi-IN' },
+  },
+  'onboarding_ready_description': {
+    en: { text: 'You can now start adding your medicines and never miss a dose. Tap below to get started!', tts: 'You can now start adding your medicines and never miss a dose. Tap below to get started', ttsModel: 'en-US' },
+    ur: { text: 'اب آپ اپنی دوائیں شامل کرنا شروع کر سکتے ہیں اور کبھی خوراک نہیں چھوڑیں۔ شروع کرنے کے لیے نیچے تھپتھپائیں!', tts: 'अब आप अपनी दवाएं जोड़ना शुरू कर सکتے हैं और कभी खुराक नहीं चूकेंगे। शुरू करने के लिए नीचे टैप करें', ttsModel: 'hi-IN' },
+  },
+  'onboarding_tap_here': {
+    en: { text: 'Tap here', tts: 'Tap here', ttsModel: 'en-US' },
+    ur: { text: 'یہاں تھپتھپائیں', tts: 'यहाँ टैप करें', ttsModel: 'hi-IN' },
+  },
+  'replay_tutorial': {
+    en: { text: 'Replay Tutorial', tts: 'Replay the onboarding tutorial', ttsModel: 'en-US' },
+    ur: { text: 'ٹیوٹوریل دوبارہ چلائیں', tts: 'ट्यूटोरियल फिर से चलाएं', ttsModel: 'hi-IN' },
+  },
 };
 
 export function getLocalizedTTS(key: string, language: Language): string {

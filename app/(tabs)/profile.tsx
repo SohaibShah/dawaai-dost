@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Switch, Alert, Image, ScrollView } from 'react-native';
 import LocalizedText from '@/components/LocalizedText';
 import { useStore } from '@/store/useStore';
+import { useOnboardingStore } from '@/store/onboardingStore';
 import { useAlertStore } from '@/store/alertStore';
 import { useLocalization } from '@/utils/useLocalization';
 import { useTextScale } from '@/utils/useTextScale';
 import AnimatedScreen from '@/components/AnimatedScreen';
-import { User, Volume2, Trash2, ShieldCheck, Camera, Moon, Sun, Settings as SettingsIcon, ChevronRight, Globe, Maximize2, Eye, Minimize2 } from 'lucide-react-native';
+import { User, Volume2, Trash2, ShieldCheck, Camera, Moon, Sun, Settings as SettingsIcon, ChevronRight, Globe, Maximize2, Eye, Minimize2, BookOpen } from 'lucide-react-native';
 import * as ImagePicker from 'expo-image-picker';
 import VoiceSettingsModal from '@/components/VoiceSettingsModal';
 import EditProfileModal from '@/components/EditProfileModal';
@@ -14,6 +15,7 @@ import LanguageSettingsModal from '@/components/LanguageSettingsModal';
 
 export default function ProfileScreen() {
   const { settings, updateSettings, resetAllData, medicines } = useStore();
+  const { resetOnboarding } = useOnboardingStore();
   const { showAlert } = useAlertStore();
   const { t } = useLocalization();
   const { textScale, getScaledSize } = useTextScale();
@@ -35,6 +37,10 @@ export default function ProfileScreen() {
       secondaryConfirmText: 'हटाएं',
       secondaryCancelText: 'रद्द करें',
     });
+  };
+
+  const handleReplayTutorial = () => {
+    resetOnboarding();
   };
 
   const cycleTheme = () => {
@@ -230,6 +236,20 @@ export default function ProfileScreen() {
             </View>
           </View>
 */}
+          {/* 7.5 REPLAY TUTORIAL */}
+          <TouchableOpacity onPress={handleReplayTutorial} className="bg-surface dark:bg-dark-surface p-5 mb-6 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border">
+            <View className="flex-row items-center">
+              <View className="bg-purple-50 dark:bg-purple-900/40 p-2.5 rounded-xl mr-4">
+                <BookOpen size={20} color="#9333EA" />
+              </View>
+              <View className="min-w-0">
+                <LocalizedText className="text-lg font-semibold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail">{t('replay_tutorial')}</LocalizedText>
+                <LocalizedText className="text-text-muted dark:text-dark-text-muted text-xs" numberOfLines={1} ellipsizeMode="tail">Learn how to use the app</LocalizedText>
+              </View>
+            </View>
+            <ChevronRight size={20} color="#CBD5E1" />
+          </TouchableOpacity>
+
           {/* 8. DANGER ZONE */}
           <TouchableOpacity onPress={handleReset} className="bg-surface dark:bg-dark-surface p-5 mb-24 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm">
             <View className="flex-row flex-1 items-center overflow-hidden">
