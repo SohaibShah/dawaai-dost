@@ -8,32 +8,53 @@ TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async ({ data, error }) => 
 
     const response = data as Notifications.NotificationResponse;
     const actionId = response.actionIdentifier;
-    const { medId, timeSlot } = response.notification.request.content.data;
+    
+    // Add null safety checks
+    const notificationData = response.notification.request.content.data;
+    if (!notificationData || typeof notificationData !== 'object') {
+        console.warn('BackgroundNotificationHandler: No data found in notification');
+        return;
+    }
+    
+    const { medId, timeSlot } = notificationData;
+    
+    if (!medId || !timeSlot) {
+        console.warn('BackgroundNotificationHandler: Missing medId or timeSlot', notificationData);
+        return;
+    }
 
     // NOTE: 'TAKE' is now handled by the foreground app (index.tsx)
     // because we set opensAppToForeground: true.
 
     if (actionId === 'SNOOZE') {
-        // Schedule Snooze (Use Date trigger for reliability)
-        const triggerDate = new Date();
-        triggerDate.setMinutes(triggerDate.getMinutes() + 10);
+        try {
+            // Schedule Snooze (Use Date trigger for reliability)
+            const triggerDate = new Date();
+            triggerDate.setMinutes(triggerDate.getMinutes() + 10);
 
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: `Snoozed: ${response.notification.request.content.title}`,
-                body: "Don't forget to take your meds!",
-                data: { medId, timeSlot },
-                categoryIdentifier: 'MEDICATION_ACTION',
-                color: '#FF231F7C',
-            },
-            trigger: {
-                type: Notifications.SchedulableTriggerInputTypes.DATE,
-                date: triggerDate
-            }
-        });
+            const snoozeNotifId = await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: `Snoozed: ${response.notification.request.content.title}`,
+                    body: "Don't forget to take your meds!",
+                    data: { medId, timeSlot },
+                    categoryIdentifier: 'MEDICATION_ACTION',
+                    color: '#FF231F7C',
+                    sound: true,
+                },
+                trigger: {
+                    type: Notifications.SchedulableTriggerInputTypes.DATE,
+                    date: triggerDate,
+                    channelId: 'medication-reminders',
+                }
+            });
 
-        // Dismiss the original
-        await Notifications.dismissNotificationAsync(response.notification.request.identifier);
+            console.log(`BackgroundNotificationHandler: Snooze scheduled for ${triggerDate.toLocaleTimeString()}, ID: ${snoozeNotifId}`);
+
+            // Dismiss the original
+            await Notifications.dismissNotificationAsync(response.notification.request.identifier);
+        } catch (error) {
+            console.error('BackgroundNotificationHandler: Error scheduling snooze:', error);
+        }
     }
 });
 

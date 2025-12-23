@@ -508,11 +508,11 @@ export const STRINGS: Record<string, LocalizedString> = {
   // ============ Confirmation Modal ============
   'confirm_dose': {
     en: { text: 'Confirm Dose', tts: 'Confirm dose', ttsModel: 'en-US' },
-    ur: { text: 'خوراک کی تصدیق کریں', tts: 'खुराक की पुष्टि करें', ttsModel: 'hi-IN' },
+    ur: { text: 'خوراک کی تصدیق کریں', tts: 'खुराक की तसदीक करें', ttsModel: 'hi-IN' },
   },
   'confirm_dose_removal': {
     en: { text: 'Confirm Dose Removal', tts: 'Confirm dose removal', ttsModel: 'en-US' },
-    ur: { text: 'خوراک ہٹانے کی تصدیق کریں', tts: 'खुराक हटाने की पुष्टि करें', ttsModel: 'hi-IN' },
+    ur: { text: 'خوراک ہٹانے کی تصدیق کریں', tts: 'खुराक हटाने की तसदीक करें', ttsModel: 'hi-IN' },
   },
   'mark_as_taken': {
     en: { text: 'Mark {name} as taken?', tts: 'Mark as taken', ttsModel: 'en-US' },
@@ -544,7 +544,7 @@ export const STRINGS: Record<string, LocalizedString> = {
   },
   'unmark_question': {
     en: { text: 'Do you want to unmark {name} as taken today?', tts: 'Do you want to unmark as taken today', ttsModel: 'en-US' },
-    ur: { text: 'کیا آپ آج {name} کو لیا ہوا سے ہٹانا چاہتے ہیں؟', tts: 'क्या आप आज लिया हुआ से हटाना चाहते हैं', ttsModel: 'hi-IN' },
+    ur: { text: 'کیا آپ آج {name} کو لیا ہوا سے ہٹانا چاہتے ہیں؟', tts: 'क्या आप आज ली हुवी दवाइयों में से इस दवाई को हटाना चाहते हैं', ttsModel: 'hi-IN' },
   },
 
   // ============ Edit Medicine Modal ============
@@ -687,11 +687,11 @@ export const STRINGS: Record<string, LocalizedString> = {
   // ============ Audio Confirmations ============
   'dose_marked_taken': {
     en: { text: 'Dose marked as taken', tts: 'Dose marked as taken', ttsModel: 'en-US' },
-    ur: { text: 'خوراک لی گئی کے طور پر نشان زد', tts: 'खुराक लिए गए के रूप में चिह्नित', ttsModel: 'hi-IN' },
+    ur: { text: 'خوراک لی گئی کے طور پر نشان زد کر دی گئی', tts: 'खुराक लिए गए के तोर पर निशान ज़द कर दी गई।', ttsModel: 'hi-IN' },
   },
   'dose_unmarked': {
     en: { text: 'Dose unmarked', tts: 'Dose unmarked', ttsModel: 'en-US' },
-    ur: { text: 'خوراک غیر نشان زد', tts: 'खुराक अचिह्नित', ttsModel: 'hi-IN' },
+    ur: { text: 'خوراک غیر نشان زد کر دی گئی', tts: 'खुराक ग़ैर निशान ज़द कर दी गई', ttsModel: 'hi-IN' },
   },
   'medicine_added_successfully': {
     en: { text: 'Medicine added successfully', tts: 'Medicine added successfully', ttsModel: 'en-US' },

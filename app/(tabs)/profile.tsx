@@ -237,9 +237,9 @@ export default function ProfileScreen() {
           </View>
 */}
           {/* 7.5 REPLAY TUTORIAL */}
-          <TouchableOpacity onPress={handleReplayTutorial} className="bg-surface dark:bg-dark-surface p-5 mb-6 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border">
-            <View className="flex-row items-center">
-              <View className="bg-purple-50 dark:bg-purple-900/40 p-2.5 rounded-xl mr-4">
+          <TouchableOpacity onPress={handleReplayTutorial} className="bg-surface dark:bg-dark-surface p-5 mb-6 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm">
+            <View className="flex-row flex-1 items-center overflow-hidden">
+              <View className="bg-purple-50 dark:bg-purple-900/40 p-2.5 rounded-xl mr-4 border border-purple-100 dark:border-purple-700/60">
                 <BookOpen size={20} color="#9333EA" />
               </View>
               <View className="min-w-0">
