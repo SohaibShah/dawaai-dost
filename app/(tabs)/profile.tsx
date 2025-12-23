@@ -192,7 +192,7 @@ export default function ProfileScreen() {
           </View>
 
           {/* 5. HIGH CONTRAST MODE */}
-          // TODO: Re-implement high contrast mode
+          {/* TODO: Re-implement high contrast mode */}
           {/* <View className="bg-surface dark:bg-dark-surface p-5 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm mb-6">
             <View className="flex-row items-center flex-1 min-w-0 overflow-hidden">
               <View className="bg-indigo-50 dark:bg-indigo-900/40 p-2.5 rounded-xl mr-4">
@@ -214,7 +214,7 @@ export default function ProfileScreen() {
           </View> */}
 
           {/* 6. SIMPLIFIED MODE */}
-          // TODO: Re-implement simplified mode
+          {/* TODO: Re-implement simplified mode */}
           {/*
           <View className="bg-surface dark:bg-dark-surface p-5 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm mb-6">
             <View className="flex-row items-center flex-1 min-w-0 overflow-hidden">
