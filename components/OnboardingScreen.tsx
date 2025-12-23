@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Animated, Dimensions, ScrollView, Modal } from 
 import { useOnboardingStore } from '@/store/onboardingStore';
 import { useStore } from '@/store/useStore';
 import { useLocalization } from '@/utils/useLocalization';
+import { STRINGS } from '@/utils/localization';
 import LocalizedText from '@/components/LocalizedText';
 import { VoiceService } from '@/services/VoiceService';
 import { Globe, Volume2, VolumeX, Check, ChevronRight, ArrowRight } from 'lucide-react-native';
@@ -17,7 +18,7 @@ interface OnboardingScreenProps {
 export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const { currentStep, setCurrentStep, setCompleted, setShowOnboarding, targets } = useOnboardingStore();
   const { settings, updateSettings } = useStore();
-  const { t } = useLocalization();
+  const { t, getDualTTS } = useLocalization();
   
   const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ur'>(settings.appLanguage);
   const [voiceEnabled, setVoiceEnabled] = useState(settings.voiceEnabled);
@@ -63,15 +64,14 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
       'onboarding_ready_description',
     ];
 
-    const title = t(titleKeys[currentStep] || '');
-    const desc = t(descKeys[currentStep] || '');
-    const en = `${title}. ${desc}`;
-    const ur = `${title}۔ ${desc}`;
-    if (dualLanguage) {
-      VoiceService.speakDual(en, ur);
-    } else {
-      VoiceService.speakDual('', ur);
-    }
+    const titleKey = titleKeys[currentStep];
+    const descKey = descKeys[currentStep];
+    if (!titleKey || !descKey) return;
+    const { en: titleEn, hi: titleHi } = getDualTTS(titleKey);
+    const { en: descEn, hi: descHi } = getDualTTS(descKey);
+    const enText = `${titleEn}. ${descEn}`;
+    const hiText = `${titleHi}. ${descHi}`;
+    VoiceService.speakDual(enText, hiText);
   };
 
   const handleNext = () => {
@@ -152,17 +152,17 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
 
   // Interactive spotlight steps bound to measured targets
   const tourSteps: TourStep[] = useMemo(() => [
-    { target: null, title: t('onboarding_welcome'), description: t('onboarding_subtitle'), titleUrdu: t('onboarding_welcome'), descriptionUrdu: t('onboarding_subtitle'), placement: 'center' },
-    { target: null, title: t('onboarding_language_title'), description: t('onboarding_language_description'), titleUrdu: t('onboarding_language_title'), descriptionUrdu: t('onboarding_language_description'), placement: 'center' },
-    { target: null, title: t('onboarding_voice_title'), description: t('onboarding_voice_description'), titleUrdu: t('onboarding_voice_title'), descriptionUrdu: t('onboarding_voice_description'), placement: 'center' },
-    { target: null, title: t('onboarding_features_title'), description: t('onboarding_features_caption'), titleUrdu: t('onboarding_features_title'), descriptionUrdu: t('onboarding_features_caption'), placement: 'center' },
-    { target: targets.addButton || null, title: t('onboarding_add_medicine_title'), description: t('onboarding_add_medicine_description'), titleUrdu: t('onboarding_add_medicine_title'), descriptionUrdu: t('onboarding_add_medicine_description') },
-    { target: targets.dosePill || null, title: t('onboarding_mark_dose_title'), description: t('onboarding_mark_dose_description'), titleUrdu: t('onboarding_mark_dose_title'), descriptionUrdu: t('onboarding_mark_dose_description') },
-    { target: targets.medicineCard || null, title: t('onboarding_edit_medicine_title'), description: t('onboarding_edit_medicine_description'), titleUrdu: t('onboarding_edit_medicine_title'), descriptionUrdu: t('onboarding_edit_medicine_description') },
-    { target: targets.suggestionBanner || null, title: t('onboarding_smart_suggestions_title'), description: t('onboarding_smart_suggestions_description'), titleUrdu: t('onboarding_smart_suggestions_title'), descriptionUrdu: t('onboarding_smart_suggestions_description') },
-    { target: null, title: t('onboarding_profile_title'), description: t('onboarding_profile_description'), titleUrdu: t('onboarding_profile_title'), descriptionUrdu: t('onboarding_profile_description'), placement: 'center' },
-    { target: null, title: t('onboarding_ready_title'), description: t('onboarding_ready_description'), titleUrdu: t('onboarding_ready_title'), descriptionUrdu: t('onboarding_ready_description'), placement: 'center' },
-  ], [targets, t]);
+    { target: null, titleKey: 'onboarding_welcome', descKey: 'onboarding_subtitle', title: STRINGS['onboarding_welcome'].en.text, description: STRINGS['onboarding_subtitle'].en.text, titleUrdu: STRINGS['onboarding_welcome'].ur.text, descriptionUrdu: STRINGS['onboarding_subtitle'].ur.text, placement: 'center' },
+    { target: null, titleKey: 'onboarding_language_title', descKey: 'onboarding_language_description', title: STRINGS['onboarding_language_title'].en.text, description: STRINGS['onboarding_language_description'].en.text, titleUrdu: STRINGS['onboarding_language_title'].ur.text, descriptionUrdu: STRINGS['onboarding_language_description'].ur.text, placement: 'center' },
+    { target: null, titleKey: 'onboarding_voice_title', descKey: 'onboarding_voice_description', title: STRINGS['onboarding_voice_title'].en.text, description: STRINGS['onboarding_voice_description'].en.text, titleUrdu: STRINGS['onboarding_voice_title'].ur.text, descriptionUrdu: STRINGS['onboarding_voice_description'].ur.text, placement: 'center' },
+    { target: null, titleKey: 'onboarding_features_title', descKey: 'onboarding_features_caption', title: STRINGS['onboarding_features_title'].en.text, description: STRINGS['onboarding_features_caption'].en.text, titleUrdu: STRINGS['onboarding_features_title'].ur.text, descriptionUrdu: STRINGS['onboarding_features_caption'].ur.text, placement: 'center' },
+    { target: targets.addButton || null, titleKey: 'onboarding_add_medicine_title', descKey: 'onboarding_add_medicine_description', title: STRINGS['onboarding_add_medicine_title'].en.text, description: STRINGS['onboarding_add_medicine_description'].en.text, titleUrdu: STRINGS['onboarding_add_medicine_title'].ur.text, descriptionUrdu: STRINGS['onboarding_add_medicine_description'].ur.text },
+    { target: targets.dosePill || null, titleKey: 'onboarding_mark_dose_title', descKey: 'onboarding_mark_dose_description', title: STRINGS['onboarding_mark_dose_title'].en.text, description: STRINGS['onboarding_mark_dose_description'].en.text, titleUrdu: STRINGS['onboarding_mark_dose_title'].ur.text, descriptionUrdu: STRINGS['onboarding_mark_dose_description'].ur.text },
+    { target: targets.medicineCard || null, titleKey: 'onboarding_edit_medicine_title', descKey: 'onboarding_edit_medicine_description', title: STRINGS['onboarding_edit_medicine_title'].en.text, description: STRINGS['onboarding_edit_medicine_description'].en.text, titleUrdu: STRINGS['onboarding_edit_medicine_title'].ur.text, descriptionUrdu: STRINGS['onboarding_edit_medicine_description'].ur.text },
+    { target: targets.suggestionBanner || null, titleKey: 'onboarding_smart_suggestions_title', descKey: 'onboarding_smart_suggestions_description', title: STRINGS['onboarding_smart_suggestions_title'].en.text, description: STRINGS['onboarding_smart_suggestions_description'].en.text, titleUrdu: STRINGS['onboarding_smart_suggestions_title'].ur.text, descriptionUrdu: STRINGS['onboarding_smart_suggestions_description'].ur.text },
+    { target: null, titleKey: 'onboarding_profile_title', descKey: 'onboarding_profile_description', title: STRINGS['onboarding_profile_title'].en.text, description: STRINGS['onboarding_profile_description'].en.text, titleUrdu: STRINGS['onboarding_profile_title'].ur.text, descriptionUrdu: STRINGS['onboarding_profile_description'].ur.text, placement: 'center' },
+    { target: null, titleKey: 'onboarding_ready_title', descKey: 'onboarding_ready_description', title: STRINGS['onboarding_ready_title'].en.text, description: STRINGS['onboarding_ready_description'].en.text, titleUrdu: STRINGS['onboarding_ready_title'].ur.text, descriptionUrdu: STRINGS['onboarding_ready_description'].ur.text, placement: 'center' },
+  ], [targets]);
 
   const isSpotlightStep = currentStep >= 4 && currentStep <= 7;
 

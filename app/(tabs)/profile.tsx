@@ -244,7 +244,7 @@ export default function ProfileScreen() {
               </View>
               <View className="min-w-0">
                 <LocalizedText className="text-lg font-semibold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail">{t('replay_tutorial')}</LocalizedText>
-                <LocalizedText className="text-text-muted dark:text-dark-text-muted text-xs" numberOfLines={1} ellipsizeMode="tail">Learn how to use the app</LocalizedText>
+                <LocalizedText className="text-text-muted dark:text-dark-text-muted text-xs" numberOfLines={1} ellipsizeMode="tail">{t('learn_how_to_use_the_app')}</LocalizedText>
               </View>
             </View>
             <ChevronRight size={20} color="#CBD5E1" />

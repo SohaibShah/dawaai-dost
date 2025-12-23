@@ -24,6 +24,8 @@ export interface TourStep {
   titleUrdu: string;
   descriptionUrdu: string;
   placement?: 'top' | 'bottom' | 'center';
+  titleKey?: string;
+  descKey?: string;
 }
 
 interface InteractiveTourProps {
@@ -43,9 +45,10 @@ export default function InteractiveTour({
   onSkip,
   onComplete,
 }: InteractiveTourProps) {
-  const { t } = useLocalization();
+  const { t, isUrdu, getDualTTS } = useLocalization();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const [tooltipHeight, setTooltipHeight] = useState<number>(220);
 
   useEffect(() => {
     if (visible && currentStep < steps.length) {
@@ -80,11 +83,15 @@ export default function InteractiveTour({
   const speakStep = (step: TourStep) => {
     const { settings } = useStore.getState();
     if (settings.voiceEnabled) {
-      if (settings.englishEnabled) {
-        VoiceService.speakDual(step.title + '. ' + step.description, step.titleUrdu + '. ' + step.descriptionUrdu);
-      } else {
-        VoiceService.speakDual('', step.titleUrdu + '. ' + step.descriptionUrdu);
+      let enText = step.title + '. ' + step.description;
+      let hiText = step.titleUrdu + '. ' + step.descriptionUrdu;
+      if (step.titleKey && step.descKey) {
+        const { en: enTitle, hi: hiTitle } = getDualTTS(step.titleKey);
+        const { en: enDesc, hi: hiDesc } = getDualTTS(step.descKey);
+        enText = `${enTitle}. ${enDesc}`;
+        hiText = `${hiTitle}. ${hiDesc}`;
       }
+      VoiceService.speakDual(settings.englishEnabled ? enText : '', hiText);
     }
   };
 
@@ -110,6 +117,28 @@ export default function InteractiveTour({
     onSkip();
   };
 
+  // Compute tooltip placement to avoid covering target
+  const defaultPadding = 16;
+  let computedTop: number | undefined;
+  if (step.placement === 'top') {
+    computedTop = defaultPadding;
+  } else if (step.placement === 'bottom') {
+    computedTop = Math.max(defaultPadding, SCREEN_HEIGHT - tooltipHeight - defaultPadding);
+  } else if (step.placement === 'center') {
+    computedTop = Math.max(defaultPadding, Math.floor((SCREEN_HEIGHT - tooltipHeight) / 2));
+  } else if (step.target) {
+    const spaceBelow = SCREEN_HEIGHT - (step.target.y + step.target.height);
+    const placeBelow = step.target.y + step.target.height + defaultPadding;
+    const placeAbove = step.target.y - tooltipHeight - defaultPadding;
+    if (spaceBelow >= tooltipHeight + defaultPadding * 2) {
+      computedTop = Math.min(placeBelow, SCREEN_HEIGHT - tooltipHeight - defaultPadding);
+    } else {
+      computedTop = Math.max(defaultPadding, placeAbove);
+    }
+  } else {
+    computedTop = Math.max(defaultPadding, Math.floor((SCREEN_HEIGHT - tooltipHeight) / 2));
+  }
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={{ flex: 1 }} pointerEvents="box-none">
@@ -129,24 +158,11 @@ export default function InteractiveTour({
             left: 20,
             right: 20,
             opacity: fadeAnim,
-            ...(step.placement === 'top' && { top: 100 }),
-            ...(step.placement === 'bottom' && { bottom: 100 }),
-            ...(step.placement === 'center' && { 
-              top: '50%', 
-              transform: [{ translateY: -150 }] 
-            }),
-            ...(!step.placement && step.target && {
-              top: step.target.y + step.target.height + 20 > SCREEN_HEIGHT / 2
-                ? step.target.y - 200
-                : step.target.y + step.target.height + 20,
-            }),
-            ...(!step.placement && !step.target && {
-              top: '50%',
-              transform: [{ translateY: -150 }],
-            }),
+            ...(computedTop !== undefined ? { top: computedTop } : {}),
           }}
           className="bg-surface dark:bg-dark-surface rounded-2xl p-6 shadow-2xl border border-border dark:border-dark-border"
           pointerEvents="auto"
+          onLayout={(e) => setTooltipHeight(e.nativeEvent.layout.height)}
         >
           {/* Close/Skip Button */}
           <TouchableOpacity
@@ -165,24 +181,14 @@ export default function InteractiveTour({
             </View>
           </View>
 
-          {/* Title */}
+          {/* Title (single-language) */}
           <LocalizedText className="text-xl font-bold text-text-main dark:text-dark-text-main mb-2">
-            {step.title}
+            {isUrdu ? step.titleUrdu : step.title}
           </LocalizedText>
 
-          {/* Urdu Title */}
-          <LocalizedText className="text-lg font-semibold text-text-muted dark:text-dark-text-muted mb-3" style={{ textAlign: 'right' }}>
-            {step.titleUrdu}
-          </LocalizedText>
-
-          {/* Description */}
-          <LocalizedText className="text-base text-text-muted dark:text-dark-text-muted leading-6 mb-3">
-            {step.description}
-          </LocalizedText>
-
-          {/* Urdu Description */}
-          <LocalizedText className="text-sm text-text-muted dark:text-dark-text-muted leading-5 mb-6" style={{ textAlign: 'right' }}>
-            {step.descriptionUrdu}
+          {/* Description (single-language) */}
+          <LocalizedText className="text-base text-text-muted dark:text-dark-text-muted leading-6 mb-6">
+            {isUrdu ? step.descriptionUrdu : step.description}
           </LocalizedText>
 
           {/* Navigation */}
