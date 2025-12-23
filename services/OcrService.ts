@@ -2,7 +2,6 @@ import { Platform } from 'react-native';
 // Use legacy API for file writes to avoid deprecation warnings
 import * as FileSystem from 'expo-file-system/legacy';
 
-// Try to import ML Kit Text Recognition
 let TextRecognition: any = null;
 try {
   const MlkitOcr = require('@react-native-ml-kit/text-recognition');
@@ -18,7 +17,6 @@ const GOOGLE_CV_URL = `https://vision.googleapis.com/v1/images:annotate?key=${GO
 export const OcrService = {
   recognizeText: async (base64Image: string): Promise<string> => {
     try {
-      // Try to use on-device OCR first (not available in Expo Go)
       if (Platform.OS !== 'web' && TextRecognition) {
         try {
           console.log("[OCR] Attempting to use on-device text recognition...");
@@ -56,7 +54,6 @@ export const OcrService = {
         console.log("[OCR] On-device OCR not available (likely running in Expo Go), using Cloud Vision...");
       }
 
-      // Fallback to Google Cloud Vision API
       console.log("[OCR] Starting request to Cloud Vision API...");
       const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, "");
 
@@ -78,17 +75,14 @@ export const OcrService = {
         body: JSON.stringify(body),
       });
 
-      // 2. ERROR TRAPPING (The missing piece)
       if (!response.ok) {
-        // If the status is NOT 200-299, something went wrong.
-        const errorBody = await response.text(); // Get raw text to see the error message
+        const errorBody = await response.text();
         console.error(`[OCR] API Error (${response.status}):`, errorBody);
         throw new Error(`Cloud Vision API Failed: ${response.status} ${errorBody}`);
       }
 
       const json = await response.json();
 
-      // 3. Check for empty results (Valid request, but no text found)
       if (!json.responses || !json.responses[0]) {
         console.warn("[OCR] API returned a valid response but no data.");
         return "";

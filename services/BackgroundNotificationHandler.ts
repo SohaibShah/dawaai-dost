@@ -23,9 +23,6 @@ TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async ({ data, error }) => 
         return;
     }
 
-    // NOTE: 'TAKE' is now handled by the foreground app (index.tsx)
-    // because we set opensAppToForeground: true.
-
     if (actionId === 'SNOOZE') {
         try {
             // Schedule Snooze (Use Date trigger for reliability)

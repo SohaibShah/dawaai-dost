@@ -23,7 +23,6 @@ import { OcrService } from '@/services/OcrService';
 
 import { VoiceService } from '@/services/VoiceService';
 
-// --- Types & Constants ---
 type WizardStep = 'camera' | 'name' | 'frequency' | 'times' | 'stock' | 'review';
 const STEPS = ['name', 'frequency', 'times', 'stock', 'review'];
 const { width } = Dimensions.get('window');
@@ -38,16 +37,13 @@ export default function AddMedicineScreen() {
   const isDark = colorScheme === 'dark';
   const { t, getDualTTS, getMedicineName } = useLocalization();
 
-  // --- State: Camera ---
   const [autoFocusState, setAutoFocusState] = useState<'on' | 'off'>('on');
   const [focusPoint, setFocusPoint] = useState({ x: 0, y: 0, visible: false });
   const [imageUri, setImageUri] = useState<string | null>(null);
 
-  // --- State: Wizard Data ---
   const [currentStep, setCurrentStep] = useState<WizardStep>('camera');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Form Fields
   const [name, setName] = useState('');
   const [dosage, setDosage] = useState('');
   const [frequency, setFrequency] = useState('Daily');
@@ -57,7 +53,6 @@ export default function AddMedicineScreen() {
   const [stockType, setStockType] = useState('Pills');
   const [showPickerIndex, setShowPickerIndex] = useState<number | null>(null);
 
-  // --- Effects ---
   useEffect(() => {
     if (currentStep === 'name' && !name) {
       const { en, hi } = getDualTTS('prompt_enter_name');
@@ -76,8 +71,6 @@ export default function AddMedicineScreen() {
       VoiceService.speakDual(en, hi);
     }
   }, [currentStep, getDualTTS]);
-
-  // --- Handlers ---
 
   const handleTapToFocus = (e: any) => {
     const { pageX, pageY } = e.nativeEvent;
@@ -143,7 +136,6 @@ export default function AddMedicineScreen() {
         setImageUri(photo?.uri || null);
         setIsProcessing(true);
 
-        // OCR Processing
         if (photo?.base64) {
           processImage(photo.base64);
         }
@@ -170,7 +162,6 @@ export default function AddMedicineScreen() {
     if (idx < STEPS.length - 1) {
       setCurrentStep(STEPS[idx + 1] as WizardStep);
     } else {
-      // Final Save
       handleSave();
     }
   };
@@ -192,9 +183,8 @@ export default function AddMedicineScreen() {
       const newSlots = [...timeSlots];
       newSlots[index] = selectedDate;
 
-      // SMART FEATURE: Auto-calculate subsequent slots if "3 times a day"
       if (index === 0 && timesPerDay > 1) {
-        const interval = 24 / (timesPerDay || 1); // Simple spacing logic
+        const interval = 24 / (timesPerDay || 1);
         for (let i = 1; i < timesPerDay; i++) {
           const nextTime = new Date(selectedDate);
           nextTime.setHours(selectedDate.getHours() + i * interval);
@@ -260,14 +250,12 @@ export default function AddMedicineScreen() {
       timeSlots: timeSlots.map(d => VoiceService.formatTime({ time: d })),
       imageUri: imageUri || undefined,
       stock: parseInt(stock) || 0,
-      color: 'bg-blue-500' // Default color
+      color: 'bg-blue-500'
     });
     
-    // Reset tab and navigate
     resetTab();
     router.push('/(tabs)');
     
-    // Show success alert after navigation
     setTimeout(() => {
       showAlert({
         title: t('alert_success'),
@@ -337,9 +325,6 @@ export default function AddMedicineScreen() {
     setImageUri(null);
   };
 
-  // --- RENDER HELPERS ---
-
-  // Progress Bar Component
   const renderProgressBar = () => {
     const currentIndex = STEPS.indexOf(currentStep);
     const progress = ((currentIndex + 1) / STEPS.length) * 100;
@@ -355,7 +340,6 @@ export default function AddMedicineScreen() {
     );
   };
 
-  // --- RENDER: CAMERA ---
   if (!permission?.granted || currentStep === 'camera') {
     if (!permission?.granted) return <RequestPermissionView request={requestPermission} />;
 
@@ -393,10 +377,8 @@ export default function AddMedicineScreen() {
     );
   }
 
-  // --- RENDER: FORM WIZARD ---
   return (
     <View className="flex-1 bg-background dark:bg-dark-background">
-      {/* Header Image */}
       <View className="absolute top-0 w-full h-64 bg-slate-900 dark:bg-dark-surface">
         {imageUri && <Image source={{ uri: imageUri }} className="w-full h-full opacity-50" />}
       </View>
@@ -405,14 +387,12 @@ export default function AddMedicineScreen() {
         <ArrowLeft color="white" size={24} />
       </TouchableOpacity>
 
-      {/* Main Card */}
       <View className="flex-1 mt-40 bg-surface dark:bg-dark-surface rounded-t-[40px] shadow-2xl px-8 pt-8 border border-border dark:border-dark-border">
         {renderProgressBar()}
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
           <AnimatePresence exitBeforeEnter>
 
-            {/* STEP 1: NAME & DOSAGE */}
             {currentStep === 'name' && (
               <MotiView key="step1" from={{ opacity: 0, left: 20 }} animate={{ opacity: 1, left: 0 }} exit={{ opacity: 0, left: -20 }}>
                 <LocalizedText sizeClass="text-2xl" className="font-bold text-text-main dark:text-dark-text-main mb-6" numberOfLines={1} ellipsizeMode="tail" marquee>
@@ -421,7 +401,6 @@ export default function AddMedicineScreen() {
 
                 <InputGroup
                   label={t('prompt_medicine_name')}
-                  // subLabel={t('medicine_name_sublabel')}
                   value={name}
                   placeholder={t('medicine_name_placeholder')}
                   onChange={setName}
@@ -447,7 +426,6 @@ export default function AddMedicineScreen() {
               </MotiView>
             )}
 
-            {/* STEP 2: FREQUENCY */}
             {currentStep === 'frequency' && (
               <MotiView key="step2" from={{ opacity: 0, left: 20 }} animate={{ opacity: 1, left: 0 }} exit={{ opacity: 0, left: -20 }}>
                 <LocalizedText sizeClass="text-2xl" className="font-bold text-text-main dark:text-dark-text-main mb-6" numberOfLines={1} ellipsizeMode="tail" marquee>
@@ -483,7 +461,6 @@ export default function AddMedicineScreen() {
               </MotiView>
             )}
 
-            {/* STEP 3: TIMES */}
             {currentStep === 'times' && (
               <MotiView key="step3" from={{ opacity: 0, left: 20 }} animate={{ opacity: 1, left: 0 }} exit={{ opacity: 0, left: -20 }}>
                 <LocalizedText sizeClass="text-2xl" className="font-bold text-text-main dark:text-dark-text-main mb-2" numberOfLines={1} ellipsizeMode="tail" marquee>
@@ -532,7 +509,6 @@ export default function AddMedicineScreen() {
               </MotiView>
             )}
 
-            {/* STEP 4: STOCK */}
             {currentStep === 'stock' && (
               <MotiView key="step4" from={{ opacity: 0, left: 20 }} animate={{ opacity: 1, left: 0 }} exit={{ opacity: 0, left: -20 }}>
                 <LocalizedText sizeClass="text-2xl" className="font-bold text-text-main dark:text-dark-text-main mb-6" numberOfLines={1} ellipsizeMode="tail" marquee>
@@ -572,7 +548,6 @@ export default function AddMedicineScreen() {
               </MotiView>
             )}
 
-            {/* STEP 5: REVIEW */}
             {currentStep === 'review' && (
               <MotiView key="step5" from={{ opacity: 0, left: 20 }} animate={{ opacity: 1, left: 0 }}>
                 <LocalizedText sizeClass="text-2xl" className="font-bold text-text-main dark:text-dark-text-main mb-6" numberOfLines={1} ellipsizeMode="tail" marquee>
@@ -589,7 +564,6 @@ export default function AddMedicineScreen() {
 
           </AnimatePresence>
 
-          {/* Navigation Buttons */}
           <View className="flex-row mt-10 gap-4">
             {currentStep !== 'review' ? (
               <TouchableOpacity onPress={handleNext} className="flex-1 bg-primary py-4 rounded-2xl items-center shadow-lg shadow-blue-500/30">
@@ -607,8 +581,6 @@ export default function AddMedicineScreen() {
     </View>
   );
 }
-
-// --- SUB COMPONENTS ---
 
 const FocusBox = ({ x, y }: { x: number, y: number }) => (
   <View style={{ position: 'absolute', left: x - 30, top: y - 30, width: 60, height: 60, borderColor: '#FACC15', borderWidth: 2, borderRadius: 8, zIndex: 99 }} />

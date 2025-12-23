@@ -5,7 +5,6 @@ import { useLocalization } from '@/utils/useLocalization';
 import { X, Check, Globe } from 'lucide-react-native';
 import LocalizedText from './LocalizedText';
 
-// Supported app languages
 const SUPPORTED_LANGUAGES = [
   { code: 'en' as const, name: 'English', nativeName: 'English', nameKey: 'english', nativeNameKey: 'english' },
   { code: 'ur' as const, name: 'Urdu', nativeName: 'اردو', nameKey: 'urdu', nativeNameKey: 'urdu' },
@@ -18,7 +17,6 @@ export default function LanguageSettingsModal({ visible, onClose }: { visible: b
   return (
     <Modal visible={visible} animationType="slide">
       <View className="flex-1 bg-background dark:bg-dark-background pt-12 px-6">
-        {/* Header */}
         <View className="flex-row justify-between items-center mb-6">
           <LocalizedText sizeClass="text-3xl" className="font-bold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail" marquee>
             {t('language')}
@@ -31,12 +29,10 @@ export default function LanguageSettingsModal({ visible, onClose }: { visible: b
           </TouchableOpacity>
         </View>
 
-        {/* Description */}
         <LocalizedText className="text-text-muted dark:text-dark-text-muted mb-6" sizeClass="text-sm" numberOfLines={1} ellipsizeMode="tail">
           {t('choose_language')}
         </LocalizedText>
 
-        {/* Language List */}
         <ScrollView showsVerticalScrollIndicator={false}>
           {SUPPORTED_LANGUAGES.map((lang) => (
             <TouchableOpacity

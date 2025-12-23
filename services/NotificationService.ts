@@ -33,12 +33,10 @@ export const NotificationService = {
 
         if (finalStatus !== 'granted') return;
 
-        // REGISTER ACTIONS
         await Notifications.setNotificationCategoryAsync('MEDICATION_ACTION', [
             {
                 identifier: 'TAKE',
                 buttonTitle: 'Take Now',
-                // FIX 1: Open app so we can show the Confirmation Modal
                 options: { opensAppToForeground: true }
             },
             {
@@ -50,12 +48,9 @@ export const NotificationService = {
     },
 
     scheduleMedicationReminder: async (med: Medicine) => {
-        // 1. Clear existing notifications to prevent duplicates
         await NotificationService.cancelAllForMed(med.id);
 
         for (const timeSlot of med.timeSlots) {
-            // --- PARSING ---
-            // We assume format "8:00 AM" because VoiceService enforces it.
             const cleanSlot = timeSlot.trim();
             const match = cleanSlot.match(/(\d+):(\d+)\s?(AM|PM)/i);
 
@@ -68,15 +63,12 @@ export const NotificationService = {
             const minutes = parseInt(match[2], 10);
             const period = match[3].toUpperCase();
 
-            // Convert to 24h
             if (period === 'PM' && hours !== 12) hours += 12;
             if (period === 'AM' && hours === 12) hours = 0;
 
             const mainId = `${med.id}_${timeSlot}_MAIN`;
             const lateId = `${med.id}_${timeSlot}_LATE`;
 
-            // --- MAIN REMINDER ---
-            // We use a Calendar Trigger which repeats daily
             await Notifications.scheduleNotificationAsync({
                 identifier: mainId,
                 content: {
@@ -85,7 +77,6 @@ export const NotificationService = {
                     sound: true,
                     categoryIdentifier: 'MEDICATION_ACTION',
                     data: { medId: med.id, timeSlot: timeSlot, type: 'main' },
-                    // Android Channel (Only in Content!)
                     ...(Platform.OS === 'android' && { color: '#FF231F7C' }),
                 },
                 trigger: {
@@ -96,7 +87,6 @@ export const NotificationService = {
                 },
             });
 
-            // --- LATE REMINDER (+30 mins) ---
             let lateH = hours;
             let lateM = minutes + 30;
             if (lateM >= 60) {
@@ -143,7 +133,6 @@ export const NotificationService = {
     },
 
     snoozeNotification: async (content: any) => {
-        // FIX 3: Use absolute Date trigger for Snooze to avoid Android interval bugs
         const triggerDate = new Date();
         triggerDate.setMinutes(triggerDate.getMinutes() + 10);
 

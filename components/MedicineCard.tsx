@@ -89,7 +89,6 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
         activeOpacity={0.9}
         className="flex-row p-4 items-start"
       >
-        {/* Visual ID */}
         <View className="h-24 w-24 rounded-2xl overflow-hidden mr-4 border border-border/60 dark:border-dark-border/60 relative mt-1 bg-surface-highlight dark:bg-dark-surface-highlight">
           {med.imageUri ? (
             <Image source={{ uri: med.imageUri }} className="h-full w-full" resizeMode="cover" />
@@ -103,7 +102,6 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
           )}
         </View>
 
-        {/* Details */}
         <View className="flex-1">
           <View className="flex-row justify-between items-start mb-2">
             <View className="flex-1 mr-2 min-w-0">
@@ -131,7 +129,6 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
             </TouchableOpacity>
           </View>
 
-          {/* INTERACTIVE PILLS */}
           <View className="flex-row flex-wrap gap-2 mt-2">
             {med.timeSlots.map((time: string, i: number) => {
               const isTaken = getDoseStatus(med.id, time);
@@ -142,14 +139,13 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
               return (
                 <TouchableOpacity 
                   key={i}
-                  onPress={() => handleDosePress(time, isTaken)} // Single-tap to toggle dose (simplified gesture)
+                  onPress={() => handleDosePress(time, isTaken)}
                   className={`px-3 py-2 rounded-full border flex-row items-center ${
                     isTaken 
-                      ? 'bg-emerald-500 border-emerald-600' // Taken Style
-                      : `${style.bg} ${style.border}`         // Pending Style
+                      ? 'bg-emerald-500 border-emerald-600'
+                      : `${style.bg} ${style.border}`
                   }`}
                   ref={i === 0 ? (el) => {
-                    // Measure first pill for spotlight target
                     if (el && (el as any).measureInWindow) {
                       (el as any).measureInWindow((x: number, y: number, width: number, height: number) => {
                         setTargetIfEmpty('dosePill', { x, y, width, height, borderRadius: height / 2 });
@@ -178,7 +174,6 @@ export default function MedicineCard({ med, onLongPress, onDosePress, suggestion
         </View>
       </TouchableOpacity>
 
-      {/* EXPANDABLE SUGGESTION DROPDOWN - Hidden in simplified mode */}
       {suggestion && !settings.simplifiedMode && (
         <View>
           <TouchableOpacity 

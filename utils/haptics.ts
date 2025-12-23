@@ -3,25 +3,19 @@ import * as Haptics from 'expo-haptics';
 const impactLight = async () => {
   try {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  } catch (error) {
-    // Ignore haptics errors silently
-  }
+  } catch (error) {}
 };
 
 const impactMedium = async () => {
   try {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  } catch (error) {
-    // Ignore haptics errors silently
-  }
+  } catch (error) {}
 };
 
 const notification = async (type: Haptics.NotificationFeedbackType) => {
   try {
     await Haptics.notificationAsync(type);
-  } catch (error) {
-    // Ignore haptics errors silently
-  }
+  } catch (error) {}
 };
 
 export const hapticTap = () => impactLight();

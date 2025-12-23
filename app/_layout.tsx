@@ -23,7 +23,6 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    // Apply theme setting to NativeWind
     if (themeSetting === 'system') {
       setColorScheme('system');
     } else {
@@ -32,7 +31,6 @@ export default function RootLayout() {
   }, [themeSetting, setColorScheme]);
 
   useEffect(() => {
-    // Show onboarding on first launch
     if (!completed && !initialCheckDone) {
       setShowOnboarding(true);
       setInitialCheckDone(true);
@@ -54,7 +52,6 @@ export default function RootLayout() {
 
         <GlobalAlert />
         
-        {/* Onboarding Modal */}
         {showOnboarding && (
           <OnboardingScreen onComplete={() => setShowOnboarding(false)} />
         )}

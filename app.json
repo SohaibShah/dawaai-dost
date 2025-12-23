@@ -44,7 +44,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.sohaibshah.dawaaidost",
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification", "fetch"]
+        "UIBackgroundModes": [
+          "remote-notification",
+          "fetch"
+        ]
       }
     },
     "android": {
@@ -54,6 +57,13 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.dawaaidost"
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9ee95245-3fc3-44e5-88ba-1e544107fa8f"
+      }
+    },
+    "owner": "thouartsohaib"
   }
 }

@@ -10,26 +10,6 @@ interface TextMagnifierModalProps {
   onClose: () => void;
 }
 
-/**
- * Modal that displays tapped text at 2.5x magnification
- * Useful for elderly users who need to read small text more easily
- * Provides high contrast and large font for maximum readability
- * 
- * Usage:
- * const [magnified, setMagnified] = useState<{text: string} | null>(null);
- * <TouchableOpacity
- *   onLongPress={() => setMagnified({text: 'some text'})}
- *   onPress={() => {count++; if (count === 2) setMagnified({text: 'some text'})}}
- * >
- *   <Text>some text</Text>
- * </TouchableOpacity>
- * 
- * <TextMagnifierModal
- *   visible={!!magnified}
- *   text={magnified?.text || ''}
- *   onClose={() => setMagnified(null)}
- * />
- */
 export const TextMagnifierModal: React.FC<TextMagnifierModalProps> = ({
   visible,
   text,

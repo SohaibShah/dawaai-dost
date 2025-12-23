@@ -1,17 +1,10 @@
-/**
- * Transliterates English medicine names to Urdu script
- * This allows medicine names to flow naturally with Urdu text
- */
-
 const TRANSLITERATION_MAP: Record<string, string> = {
-  // Vowels
   'a': 'ا',
   'e': 'ی',
   'i': 'ی',
   'o': 'و',
   'u': 'و',
   
-  // Consonants
   'b': 'ب',
   'c': 'ک',
   'd': 'ڈ',
@@ -34,7 +27,6 @@ const TRANSLITERATION_MAP: Record<string, string> = {
   'y': 'ی',
   'z': 'ز',
   
-  // Common combinations
   'ch': 'چ',
   'sh': 'ش',
   'th': 'تھ',
@@ -77,10 +69,6 @@ export function transliterateToUrdu(text: string): string {
   return result;
 }
 
-/**
- * Common medicine name mappings for better accuracy
- * These override the basic transliteration
- */
 const COMMON_MEDICINE_NAMES: Record<string, string> = {
   'panadol': 'پیناڈول',
   'paracetamol': 'پیراسیٹامول',

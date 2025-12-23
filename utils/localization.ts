@@ -6,13 +6,13 @@ export type Language = 'en' | 'ur';
 export interface LocalizedString {
   en: {
     text: string;
-    tts: string; // Text to be spoken
+    tts: string;
     ttsModel: 'en-US';
   };
   ur: {
     text: string;
     tts: string;
-    ttsModel: 'hi-IN'; // Using Hindi model for Urdu/Hindi TTS
+    ttsModel: 'hi-IN'; // Using Hindi model for Urdu/Hindi TTS because of better support.
   };
 }
 
@@ -682,9 +682,7 @@ export const STRINGS: Record<string, LocalizedString> = {
     en: { text: 'Tap anywhere to close', tts: 'Tap anywhere to close', ttsModel: 'en-US' },
     ur: { text: 'بند کرنے کے لیے کہیں بھی ٹیپ کریں', tts: 'बंद करने के लिए कहीं भी टैप करें', ttsModel: 'hi-IN' },
   },
-  // Note: 'deletes_all_medicines_settings' is defined earlier; avoid duplicate key here.
 
-  // ============ Audio Confirmations ============
   'dose_marked_taken': {
     en: { text: 'Dose marked as taken', tts: 'Dose marked as taken', ttsModel: 'en-US' },
     ur: { text: 'خوراک لی گئی کے طور پر نشان زد کر دی گئی', tts: 'खुराक लिए गए के तोर पर निशान ज़द कर दी गई।', ttsModel: 'hi-IN' },

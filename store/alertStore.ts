@@ -8,22 +8,18 @@ interface AlertState {
   message: string;
   type: AlertType;
 
-  // Optional secondary language strings (e.g., Hindi for TTS)
   secondaryTitle?: string;
   secondaryMessage?: string;
   secondaryConfirmText?: string;
   secondaryCancelText?: string;
   secondaryNeutralText?: string;
   
-  // Primary (Positive/Action)
   onConfirm?: () => void;
   confirmText?: string;
   
-  // Secondary (Negative/Destructive)
   onCancel?: () => void;
   cancelText?: string;
 
-  // NEW: Neutral (Just Close/Dismiss)
   onNeutral?: () => void;
   neutralText?: string;
   
@@ -35,7 +31,7 @@ interface AlertState {
     confirmText?: string;
     onCancel?: () => void;
     cancelText?: string;
-    onNeutral?: () => void; // NEW
+    onNeutral?: () => void;
     neutralText?: string;   // NEW
     secondaryTitle?: string;
     secondaryMessage?: string;
@@ -57,7 +53,6 @@ export const useAlertStore = create<AlertState>((set) => ({
     visible: true, 
     type: 'info',
     confirmText: 'OK',
-    // Reset callbacks to prevent ghost actions
     onConfirm: undefined,
     onCancel: undefined,
     onNeutral: undefined,

@@ -86,12 +86,10 @@ export default function GlobalAlert() {
           transition={{ type: 'spring', damping: 30, stiffness: 200 }}
           className="bg-surface dark:bg-dark-surface w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-border dark:border-dark-border"
         >
-          {/* Header */}
           <View className="flex-row justify-between items-start">
              <View className={`p-3 rounded-full mb-4 ${ThemeIcon.bg}`}>
                <IconComponent size={28} color={ThemeIcon.color} />
              </View>
-             {/* Top Right Close X (Implicit Neutral) */}
              <TouchableOpacity onPress={hideAlert} className="p-2">
                 <X size={20} color="#94A3B8" />
              </TouchableOpacity>
@@ -100,9 +98,7 @@ export default function GlobalAlert() {
           <LocalizedText className="text-xl font-bold text-text-main dark:text-dark-text-main mb-2">{title}</LocalizedText>
           <LocalizedText className="text-text-muted dark:text-dark-text-muted mb-6 leading-5">{message}</LocalizedText>
 
-          {/* Buttons Column */}
           <View className="gap-3">
-            {/* 1. Primary Action */}
             <TouchableOpacity 
               onPress={() => handleAction(onConfirm)}
               className={`w-full py-3.5 rounded-xl items-center shadow-sm ${type === 'error' ? 'bg-error dark:bg-dark-error' : 'bg-primary dark:bg-dark-primary'}`}
@@ -112,7 +108,6 @@ export default function GlobalAlert() {
               </LocalizedText>
             </TouchableOpacity>
 
-            {/* 2. Secondary Action (e.g. Delete) */}
             {onCancel && (
               <TouchableOpacity 
                 onPress={() => handleAction(onCancel)}
@@ -124,7 +119,6 @@ export default function GlobalAlert() {
               </TouchableOpacity>
             )}
 
-            {/* 3. Neutral Action (e.g. Cancel/Close) */}
             {onNeutral && (
               <TouchableOpacity 
                 onPress={() => handleAction(onNeutral)}

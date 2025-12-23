@@ -28,7 +28,6 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
   const slideAnim = useRef(new Animated.Value(50)).current;
 
   useEffect(() => {
-    // Animate in when step changes
     fadeAnim.setValue(0);
     slideAnim.setValue(50);
     Animated.parallel([
@@ -44,7 +43,6 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
       }),
     ]).start();
 
-    // Speak the current step
     speakCurrentStep();
   }, [currentStep]);
 
@@ -75,7 +73,6 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
   };
 
   const handleNext = () => {
-    // Save settings after initial setup steps
     if (currentStep === 2) {
       updateSettings({
         appLanguage: selectedLanguage,

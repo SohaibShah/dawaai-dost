@@ -40,21 +40,20 @@ export const THEME_COLORS = {
   },
 };
 
-// High contrast palette - bold, saturated colors for maximum visibility
 export const THEME_COLORS_HIGH_CONTRAST = {
   light: {
     background: '#FFFFFF',
     surface: '#F5F5F5',
     surfaceHighlight: '#E0E0E0',
-    primary: '#0051BA', // Deep blue
+    primary: '#0051BA',
     primaryFg: '#FFFFFF',
-    secondary: '#4400CC', // Deep purple
+    secondary: '#4400CC',
     secondaryFg: '#FFFFFF',
-    success: '#007F00', // Deep green
+    success: '#007F00',
     successBg: '#CCFFCC',
-    warning: '#FF6600', // Deep orange
+    warning: '#FF6600',
     warningBg: '#FFCC99',
-    error: '#CC0000', // Deep red
+    error: '#CC0000',
     errorBg: '#FFCCCC',
     textMain: '#000000',
     textMuted: '#333333',
@@ -64,15 +63,15 @@ export const THEME_COLORS_HIGH_CONTRAST = {
     background: '#000000',
     surface: '#1A1A1A',
     surfaceHighlight: '#404040',
-    primary: '#00CCFF', // Bright cyan
+    primary: '#00CCFF',
     primaryFg: '#000000',
-    secondary: '#FFFF00', // Bright yellow
+    secondary: '#FFFF00',
     secondaryFg: '#000000',
-    success: '#00FF00', // Bright green
+    success: '#00FF00',
     successBg: '#003300',
-    warning: '#FFFF00', // Bright yellow
+    warning: '#FFFF00',
     warningBg: '#333300',
-    error: '#FF0000', // Bright red
+    error: '#FF0000',
     errorBg: '#330000',
     textMain: '#FFFFFF',
     textMuted: '#CCCCCC',
@@ -84,11 +83,9 @@ export function useThemeColors() {
   const { colorScheme } = useColorScheme();
   const { theme: themeSetting, highContrast } = useStore((state) => state.settings);
   
-  // Determine actual theme based on setting (system, light, or dark)
   const actualTheme = themeSetting === 'system' ? colorScheme : themeSetting;
   const isDark = actualTheme === 'dark';
   
-  // Select palette based on high contrast setting
   const palette = highContrast ? THEME_COLORS_HIGH_CONTRAST : THEME_COLORS;
   
   return {

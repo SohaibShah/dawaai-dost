@@ -128,19 +128,16 @@ export const useStore = create<MedState>()(
           let stockChange = 0;
 
           if (takenSlots.includes(timeSlot)) {
-            // Undo taking it
             newSlots = takenSlots.filter(t => t !== timeSlot);
             stockChange = 1;
             newAnalytics = newAnalytics.filter(a => !(a.slot === timeSlot && a.takenAt.startsWith(todayStr))); const med = get().medicines.find(m => m.id === id);
             if (med) NotificationService.rescheduleLateReminder(med);
           } else {
-            // Take it
             newSlots = [...takenSlots, timeSlot];
             stockChange = -1;
             
             NotificationService.cancelLateReminder(id, timeSlot);
             
-            // Calculate how late it was taken
             const [time, period] = timeSlot.split(' ')
             let [hours, minutes] = time.split(':').map(Number);
             if (period === 'PM' && hours !== 12) hours += 12;
@@ -150,7 +147,7 @@ export const useStore = create<MedState>()(
             scheduledTime.setHours(hours, minutes, 0, 0);
 
             const diffMs = now.getTime() - scheduledTime.getTime();
-            const diffMinutes = Math.round(diffMs / 60000); // Convert ms to minutes
+            const diffMinutes = Math.round(diffMs / 60000);
 
             newAnalytics.push({
               slot: timeSlot,
@@ -185,10 +182,9 @@ export const useStore = create<MedState>()(
         return state.logs[today]?.[id]?.length || 0;
       },
 
-      // Intelligence: Check if user is constantly late
       checkAdherence: (id) => {
         const history = get().analytics[id] || [];
-        if (history.length < 3) return null; // Not enough data
+        if (history.length < 3) return null;
 
         const last3 = history.slice(-3);
         const avgDiff = last3.reduce((acc, curr) => acc + curr.diffMinutes, 0) / 3;
@@ -203,7 +199,6 @@ export const useStore = create<MedState>()(
       })),
 
       resetAllData: async () => {
-        // Cancel all notifications
         const meds = get().medicines;
         for (const med of meds) {
           await NotificationService.cancelAllForMed(med.id);

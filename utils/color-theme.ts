@@ -1,5 +1,3 @@
-// NOTE: This file isn't used anywhere. This is just for testing. This is not used for the theme.
-
 import { vars } from "nativewind";
 
 export const themes = {

@@ -52,14 +52,12 @@ export default function InteractiveTour({
 
   useEffect(() => {
     if (visible && currentStep < steps.length) {
-      // Fade in animation
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 300,
         useNativeDriver: true,
       }).start();
 
-      // Pulse animation for spotlight
       Animated.loop(
         Animated.sequence([
           Animated.timing(pulseAnim, {
@@ -75,7 +73,6 @@ export default function InteractiveTour({
         ])
       ).start();
 
-      // Speak the current step
       speakStep(steps[currentStep]);
     }
   }, [visible, currentStep]);
@@ -117,7 +114,6 @@ export default function InteractiveTour({
     onSkip();
   };
 
-  // Compute tooltip placement to avoid covering target
   const defaultPadding = 16;
   let computedTop: number | undefined;
   if (step.placement === 'top') {
@@ -142,7 +138,6 @@ export default function InteractiveTour({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={{ flex: 1 }} pointerEvents="box-none">
-        {/* Dark Overlay with Spotlight */}
         {step.target ? (
           <View style={{ flex: 1 }} pointerEvents="none">
             <SpotlightOverlay target={step.target} pulseAnim={pulseAnim} />

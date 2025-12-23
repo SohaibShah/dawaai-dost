@@ -40,7 +40,6 @@ export default function EditProfileModal({ visible, onClose }: { visible: boolea
             <TouchableOpacity onPress={onClose}><X size={24} color="#94A3B8"/></TouchableOpacity>
           </View>
 
-          {/* Photo Picker */}
           <View className="self-center mb-6 relative">
             <View className="h-32 w-32 rounded-full bg-surface-highlight dark:bg-dark-surface-highlight overflow-hidden border-4 border-surface dark:border-dark-border shadow-lg">
               {photo ? <Image source={{ uri: photo }} className="h-full w-full" /> : <View className="flex-1 items-center justify-center"><User size={40} color="#CBD5E1"/></View>}
@@ -50,7 +49,6 @@ export default function EditProfileModal({ visible, onClose }: { visible: boolea
             </TouchableOpacity>
           </View>
 
-          {/* Name Input */}
           <LocalizedText className="text-text-muted dark:text-dark-text-muted font-bold uppercase mb-2" sizeClass="text-xs">{t('display_name')}</LocalizedText>
           <TextInput 
             value={name} onChangeText={setName} 

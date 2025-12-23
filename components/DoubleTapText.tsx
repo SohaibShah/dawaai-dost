@@ -7,15 +7,6 @@ interface DoubleTapTextProps extends ViewProps {
   children: React.ReactNode;
 }
 
-/**
- * Wrapper component that detects double-tap on child text element
- * and calls onDoubleTap with the text content
- * 
- * Usage:
- * <DoubleTapText text="Some text" onDoubleTap={(txt) => showMagnifier(txt)}>
- *   <Text>Some text</Text>
- * </DoubleTapText>
- */
 export const DoubleTapText: React.FC<DoubleTapTextProps> = ({
   text,
   onDoubleTap,
@@ -27,16 +18,14 @@ export const DoubleTapText: React.FC<DoubleTapTextProps> = ({
 
   const handlePress = () => {
     const now = Date.now();
-    const DOUBLE_TAP_DELAY = 300; // 300ms window for double-tap
+    const DOUBLE_TAP_DELAY = 300;
 
     if (lastTapRef.current && now - lastTapRef.current < DOUBLE_TAP_DELAY) {
-      // Double tap detected
       setIsDoubleTap(true);
       onDoubleTap(text);
       setTimeout(() => setIsDoubleTap(false), 150);
       lastTapRef.current = 0;
     } else {
-      // First tap
       lastTapRef.current = now;
     }
   };

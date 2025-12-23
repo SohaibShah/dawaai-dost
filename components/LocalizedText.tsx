@@ -15,14 +15,6 @@ interface LocalizedTextProps extends TextProps {
 	sizeClass?: 'text-xs' | 'text-sm' | 'text-base' | 'text-lg' | 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl';
 }
 
-/**
- * Localized text with:
- * - language-aware font
- * - text scaling via sizeClass or numeric fontSize
- * - haptics on press/long-press
- * - long-press magnifier
- * - optional marquee for truncated single-line text
- */
 export default function LocalizedText({
 	style,
 	interactionMode,

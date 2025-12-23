@@ -7,7 +7,6 @@ import * as Speech from 'expo-speech';
 import LocalizedText from './LocalizedText';
 import { MotiView } from 'moti';
 
-// Supported app languages with TTS models
 const SUPPORTED_VOICE_LANGUAGES = [
   { code: 'en-US', name: 'English (US)', label: 'English' },
   { code: 'hi-IN', name: 'Hindi (India)', label: 'Urdu/Hindi' },
@@ -37,7 +36,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
     <Modal visible={visible} animationType="slide">
       <View className="flex-1 bg-background dark:bg-dark-background pt-12 px-6">
         
-        {/* Header */}
         <View className="flex-row justify-between items-center mb-6">
           <LocalizedText sizeClass="text-3xl" className="font-bold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail" marquee>
             {selectedLanguageCode ? t('select_voice') : t('voice_assistant')}
@@ -49,7 +47,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
 
         {!selectedLanguageCode ? (
           <>
-            {/* Toggles */}
             <View className="bg-surface dark:bg-dark-surface p-4 rounded-2xl mb-6 shadow-sm border border-border dark:border-dark-border">
               
               <View className="flex-row justify-between items-center mb-4">
@@ -74,7 +71,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
               </View>
             </View>
 
-            {/* Supported Languages List */}
             <LocalizedText className="text-text-muted dark:text-dark-text-muted font-bold text-xs uppercase mb-3">{t('select_voice_language')}</LocalizedText>
             
             {SUPPORTED_VOICE_LANGUAGES.map((lang) => (
@@ -96,7 +92,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
           </>
         ) : (
           <>
-            {/* Back Button and Voices List */}
             <TouchableOpacity 
               onPress={() => setSelectedLanguageCode(null)}
               className="mb-6 flex-row items-center"
@@ -104,7 +99,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
               <LocalizedText className="text-primary font-bold">{t('back')}</LocalizedText>
             </TouchableOpacity>
 
-            {/* Install Voice Pack Option */}
             <TouchableOpacity className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 p-4 rounded-xl mb-6 flex-row items-center">
               <View className="bg-blue-100 dark:bg-blue-800 p-2 rounded-lg mr-3">
                 <Download size={20} color="#0EA5E9" />
@@ -116,7 +110,6 @@ export default function VoiceSettingsModal({ visible, onClose }: { visible: bool
               <ChevronRight size={20} color="#0EA5E9" />
             </TouchableOpacity>
 
-            {/* Available Voices */}
             <LocalizedText className="text-text-muted dark:text-dark-text-muted font-bold uppercase mb-3" sizeClass="text-xs">{t('available_voices')}</LocalizedText>
             
             {availableVoicesForLang.length > 0 ? (

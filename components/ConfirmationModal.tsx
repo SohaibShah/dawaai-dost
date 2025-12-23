@@ -25,7 +25,6 @@ export default function ConfirmationModal({ visible, med, onConfirm, onCancel, i
   const [confirmClicks, setConfirmClicks] = useState(0);
   const [cancelClicks, setCancelClicks] = useState(0);
 
-  // Reset clicks when modal opens
   useEffect(() => {
     if (visible) {
       setConfirmClicks(0);
@@ -91,7 +90,7 @@ export default function ConfirmationModal({ visible, med, onConfirm, onCancel, i
         <MotiView 
           from={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: 'timing', duration: 300 }} // Smooth, no bounce
+          transition={{ type: 'timing', duration: 300 }}
           className="bg-surface dark:bg-dark-surface w-full rounded-3xl items-center shadow-2xl overflow-hidden p-6 border border-border dark:border-dark-border"
           style={{ maxHeight: height * 0.85 }}
         >

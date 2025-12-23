@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, RefreshControl, StatusBar, TouchableOpacity } from 'react-native';
 import LocalizedText from '../../components/LocalizedText';
 import { useStore, Medicine } from '../../store/useStore';
-import { useAlertStore } from '../../store/alertStore'; // NEW: Import Alert Store
+import { useAlertStore } from '../../store/alertStore';
 import { useLocalization } from '@/utils/useLocalization';
 import AnimatedScreen from '../../components/AnimatedScreen';
 import MedicineCard from '../../components/MedicineCard';
@@ -10,14 +10,13 @@ import ConfirmationModal from '../../components/ConfirmationModal';
 import EditMedicineModal from '../../components/EditMedicineModal';
 import { Sun, Moon, CloudSun, Clock, CalendarDays, Zap } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { Layout } from 'react-native-reanimated'; // For smooth list reordering
+import { Layout } from 'react-native-reanimated';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { NotificationService } from '@/services/NotificationService';
 import { useOnboardingStore } from '@/store/onboardingStore';
 
 
-// --- Semantic Section Title ---
 const SectionTitle = ({ titleKey, count }: { titleKey: string, count: number }) => {
   const { t } = useLocalization();
   return (
@@ -48,27 +47,22 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [hour, setHour] = useState(new Date().getHours());
 
-  // MODAL STATES
   const [selectedMed, setSelectedMed] = useState<Medicine | null>(null);
   const [selectedDose, setSelectedDose] = useState<string | null>(null);
   const [isDoseTaken, setIsDoseTaken] = useState<boolean>(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
-  // INTELLIGENCE
   const [suggestion, setSuggestion] = useState<{ id: string, text: string } | null>(null);
   const { setTargetIfEmpty } = useOnboardingStore();
   const suggestionRef = useRef<any>(null);
 
-  // NOTIFICATION LISTENER REFS
   const responseListener = useRef<Notifications.Subscription | null>(null);
 
   useEffect(() => {
-    // 1. Setup & Schedule
     NotificationService.registerForPushNotificationsAsync();
     medicines.forEach(m => NotificationService.scheduleMedicationReminder(m));
 
-    // 2. Listen for clicks/actions
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       const actionId = response.actionIdentifier;
       const data = response.notification.request.content.data;
@@ -84,7 +78,6 @@ export default function HomeScreen() {
       }
     });
 
-    // 3. Run Intelligence Check
     for (const med of medicines) {
       const msg = checkAdherence(med.id);
       if (msg) {
@@ -101,7 +94,6 @@ export default function HomeScreen() {
   useEffect(() => { setHour(new Date().getHours()); }, []);
 
   useEffect(() => {
-    // Measure suggestion banner after initial render
     setTimeout(() => {
       if (suggestionRef.current && suggestionRef.current.measureInWindow) {
         suggestionRef.current.measureInWindow((x: number, y: number, width: number, height: number) => {
@@ -113,15 +105,11 @@ export default function HomeScreen() {
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Re-run checks on refresh
     setHour(new Date().getHours());
     setTimeout(() => setRefreshing(false), 500);
   };
 
-  // --- HANDLERS ---
-
   const handleLongPress = (med: Medicine) => {
-    // NEW: Use Custom Alert instead of Native Alert
     showAlert({
       title: t('manage_medicine'),
       message: `${t('what_would_you_like')} ${getMedicineName(med.name)}؟`,
@@ -133,7 +121,6 @@ export default function HomeScreen() {
       },
       cancelText: t('delete_action'),
       onCancel: () => {
-        // Show a second confirmation for safety
         setTimeout(() => {
           showAlert({
             title: t('delete_medicine_confirm'),
@@ -142,7 +129,7 @@ export default function HomeScreen() {
             confirmText: t('delete'),
             onConfirm: () => removeMedicine(med.id),
             cancelText: t('cancel'),
-            onCancel: () => { }, // No action
+            onCancel: () => { },
           });
         }, 200);
       },
@@ -171,7 +158,6 @@ export default function HomeScreen() {
     }
   };
 
-  // --- TIME THEME ENGINE (Now Dark Mode Aware) ---
   const getTimeTheme = () => {
     if (hour < 12) return {
       greeting: t('good_morning'),
@@ -202,12 +188,10 @@ export default function HomeScreen() {
   const theme = getTimeTheme();
   const Icon = theme.icon;
 
-  // Stats Logic
   const totalDoses = medicines.reduce((acc, med) => acc + med.timeSlots.length, 0);
   const takenTotal = medicines.reduce((acc, med) => acc + getTakenCount(med.id), 0);
   const progressPercent = totalDoses > 0 ? (takenTotal / totalDoses) * 100 : 0;
 
-  // SVG Math
   const radius = 26;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progressPercent / 100) * circumference;
@@ -216,7 +200,6 @@ export default function HomeScreen() {
     <View className="flex-1 bg-background dark:bg-dark-background">
       <StatusBar barStyle="dark-content" className="dark:!light-content" />
 
-      {/* --- HEADER ANIMATION: Slide Down + Gentle Float --- */}
       <MotiView
         from={{ translateY: -150 }}
         animate={{ translateY: 0 }}
@@ -226,7 +209,7 @@ export default function HomeScreen() {
         <MotiView
           from={{ translateY: 0 }}
           animate={{ translateY: -5 }}
-          transition={{ loop: true, type: 'timing', duration: 3000 }} // Float effect
+          transition={{ loop: true, type: 'timing', duration: 3000 }}
         >
           <View className="flex-row justify-between items-start">
             <View className="flex-1 min-w-0">
@@ -244,7 +227,6 @@ export default function HomeScreen() {
               </LocalizedText>
             </View>
 
-            {/* Progress Circle */}
             <View className="items-center justify-center relative w-16 h-16 shrink-0">
               <Svg width="64" height="64" viewBox="0 0 64 64">
                 <Circle
@@ -281,7 +263,6 @@ export default function HomeScreen() {
       >
         <AnimatedScreen>
 
-          {/* --- SMART SUGGESTIONS BANNER --- */}
           {suggestion && (
             <MotiView
               from={{ scale: 0.8, opacity: 0 }}
@@ -299,7 +280,6 @@ export default function HomeScreen() {
             </MotiView>
           )}
 
-          {/* --- EMPTY STATE --- */}
           {medicines.length === 0 ? (
             <View className="items-center py-20">
               <View className="bg-surface-highlight dark:bg-dark-surface-highlight p-6 rounded-full mb-4">
@@ -312,7 +292,6 @@ export default function HomeScreen() {
             </View>
           ) : (
             <MotiView layout={Layout.springify()}>
-              {/* --- TO TAKE SECTION --- */}
               {(() => {
                 const pendingMeds = medicines.filter(med => {
                   const taken = getTakenCount(med.id);
@@ -340,7 +319,6 @@ export default function HomeScreen() {
                 ) : null;
               })()}
 
-              {/* --- COMPLETED SECTION --- */}
               {(() => {
                 const completedMeds = medicines.filter(med => {
                   const taken = getTakenCount(med.id);
@@ -372,7 +350,6 @@ export default function HomeScreen() {
         </AnimatedScreen>
       </ScrollView>
 
-      {/* --- MODALS --- */}
       <ConfirmationModal
         visible={isConfirmModalVisible}
         med={selectedMed}

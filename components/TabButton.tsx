@@ -2,8 +2,6 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { MotiView, MotiText } from 'moti';
 import { LucideIcon } from 'lucide-react-native';
-// Helper to toggle icon colors manually if needed, 
-// but using semantic classes is better.
 import { useColorScheme } from 'nativewind';
 import LocalizedText from './LocalizedText';
 
@@ -18,9 +16,6 @@ export default function TabButton({ onPress, accessibilityState, Icon, label }: 
   const focused = accessibilityState.selected;
   const { colorScheme } = useColorScheme();
 
-  // We can't use className on the Icon component directly for 'color' prop sometimes,
-  // so we calculate the hex.
-  // Primary Blue (#0EA5E9) vs Muted Gray (#94A3B8)
   const iconColor = focused 
     ? '#0EA5E9' 
     : (colorScheme === 'dark' ? '#94A3B8' : '#94A3B8'); 

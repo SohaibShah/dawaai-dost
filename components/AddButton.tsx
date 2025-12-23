@@ -18,7 +18,6 @@ export default function AddButton({ onPress }: { onPress: () => void }) {
   };
 
   useEffect(() => {
-    // Measure on mount
     setTimeout(measure, 300);
   }, []);
 
@@ -28,7 +27,7 @@ export default function AddButton({ onPress }: { onPress: () => void }) {
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      className="items-center justify-center -top-8" // Floating Effect
+      className="items-center justify-center -top-8"
     >
       <MotiView
         className="bg-primary w-24 h-24 rounded-full items-center justify-center shadow-lg shadow-blue-500/50"
@@ -36,7 +35,6 @@ export default function AddButton({ onPress }: { onPress: () => void }) {
         animate={{ scale: isPressed ? 0.9 : 1 }}
         transition={{ type: 'spring', stiffness: 400, damping: 10 }}
       >
-        {/* Inner Ring for Detail */}
         <View className="w-20 h-20 rounded-full border-2 border-white/30 items-center justify-center">
           <Plus size={36} color="white" strokeWidth={3} />
         </View>

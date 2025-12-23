@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Switch, Alert, Image, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Switch, Image, ScrollView } from 'react-native';
 import LocalizedText from '@/components/LocalizedText';
 import { useStore } from '@/store/useStore';
 import { useOnboardingStore } from '@/store/onboardingStore';
@@ -7,8 +7,7 @@ import { useAlertStore } from '@/store/alertStore';
 import { useLocalization } from '@/utils/useLocalization';
 import { useTextScale } from '@/utils/useTextScale';
 import AnimatedScreen from '@/components/AnimatedScreen';
-import { User, Volume2, Trash2, ShieldCheck, Camera, Moon, Sun, Settings as SettingsIcon, ChevronRight, Globe, Maximize2, Eye, Minimize2, BookOpen } from 'lucide-react-native';
-import * as ImagePicker from 'expo-image-picker';
+import { User, Volume2, Trash2, Moon, Sun, ChevronRight, Globe, Maximize2, BookOpen } from 'lucide-react-native';
 import VoiceSettingsModal from '@/components/VoiceSettingsModal';
 import EditProfileModal from '@/components/EditProfileModal';
 import LanguageSettingsModal from '@/components/LanguageSettingsModal';
@@ -54,7 +53,6 @@ export default function ProfileScreen() {
       <AnimatedScreen>
         <LocalizedText className="text-3xl font-bold text-text-main dark:text-dark-text-main mb-6">{t('settings')}</LocalizedText>
 
-        {/* 1. PROFILE CARD */}
         <TouchableOpacity
           onPress={() => setProfileModalVisible(true)}
           className="bg-surface dark:bg-dark-surface p-6 rounded-3xl mb-6 flex-row items-center shadow-sm border border-border dark:border-dark-border"
@@ -79,7 +77,6 @@ export default function ProfileScreen() {
 
         <ScrollView showsVerticalScrollIndicator={false}>
 
-          {/* 2. THEME SWITCHER */}
           <TouchableOpacity onPress={cycleTheme} className="bg-surface dark:bg-dark-surface p-5 rounded-2xl mb-4 flex-row items-center justify-between border border-border dark:border-dark-border">
             <View className="flex-row items-center">
               <View className="bg-purple-50 dark:bg-dark-surface-highlight p-2.5 rounded-xl mr-4">
@@ -95,7 +92,6 @@ export default function ProfileScreen() {
             </View>
           </TouchableOpacity>
 
-          {/* 3. LANGUAGE SELECTOR */}
           <View className="bg-surface dark:bg-dark-surface rounded-2xl overflow-hidden shadow-sm border border-border dark:border-dark-border mb-6">
             <TouchableOpacity
               onPress={() => setLanguageModalVisible(true)}
@@ -114,7 +110,6 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* 7. VOICE SETTINGS */}
           <TouchableOpacity onPress={() => setVoiceModalVisible(true)} className="bg-surface dark:bg-dark-surface p-5 mb-6 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border">
 
             <View className="flex-row items-center">
@@ -139,7 +134,6 @@ export default function ProfileScreen() {
 
           </TouchableOpacity>
 
-          {/* 4. TEXT SIZE SCALING */}
           <View className="bg-surface dark:bg-dark-surface rounded-2xl overflow-hidden shadow-sm border border-border dark:border-dark-border mb-6">
             <View className="p-5 border-b border-border dark:border-dark-border">
               <View className="flex-row items-center mb-4">
@@ -152,7 +146,6 @@ export default function ProfileScreen() {
                 </View>
               </View>
 
-              {/* Text size preview and selector */}
               <View className="flex-row justify-between mb-4">
                 {[1, 1.25, 1.5, 1.75].map((scale) => (
                   <TouchableOpacity
@@ -179,7 +172,6 @@ export default function ProfileScreen() {
                 ))}
               </View>
 
-              {/* Preview text */}
               <View className="bg-surface-highlight dark:bg-dark-surface-highlight p-4 rounded-xl">
                 <LocalizedText
                   className='text-text-main dark:text-dark-text-main'
@@ -191,52 +183,6 @@ export default function ProfileScreen() {
             </View>
           </View>
 
-          {/* 5. HIGH CONTRAST MODE */}
-          {/* TODO: Re-implement high contrast mode */}
-          {/* <View className="bg-surface dark:bg-dark-surface p-5 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm mb-6">
-            <View className="flex-row items-center flex-1 min-w-0 overflow-hidden">
-              <View className="bg-indigo-50 dark:bg-indigo-900/40 p-2.5 rounded-xl mr-4">
-                <Eye size={20} color="#6366F1" />
-              </View>
-              <View className="min-w-0">
-                <LocalizedText className="text-lg font-semibold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail">{t('high_contrast')}</LocalizedText>
-                <LocalizedText className="text-text-muted dark:text-dark-text-muted text-xs" numberOfLines={1} ellipsizeMode="tail">{t('bold_colors_for_visibility')}</LocalizedText>
-              </View>
-            </View>
-            <View className="shrink-0 ml-2.5">
-              <Switch
-                value={settings.highContrast}
-                onValueChange={(value) => updateSettings({ highContrast: value })}
-                trackColor={{ false: '#CBD5E1', true: '#0EA5E9' }}
-                thumbColor={settings.highContrast ? '#38BDF8' : '#64748B'}
-              />
-            </View>
-          </View> */}
-
-          {/* 6. SIMPLIFIED MODE */}
-          {/* TODO: Re-implement simplified mode */}
-          {/*
-          <View className="bg-surface dark:bg-dark-surface p-5 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm mb-6">
-            <View className="flex-row items-center flex-1 min-w-0 overflow-hidden">
-              <View className="bg-pink-50 dark:bg-pink-900/40 p-2.5 rounded-xl mr-4">
-                <Minimize2 size={20} color="#EC4899" />
-              </View>
-              <View className="min-w-0">
-                <LocalizedText className="text-lg font-semibold text-text-main dark:text-dark-text-main" numberOfLines={1} ellipsizeMode="tail">{t('simplified_mode')}</LocalizedText>
-                <LocalizedText className="text-text-muted dark:text-dark-text-muted text-xs" ellipsizeMode="tail">{t('show_essential_buttons_only')}</LocalizedText>
-              </View>
-            </View>
-            <View className="shrink-0 ml-2.5">
-              <Switch
-                value={settings.simplifiedMode}
-                onValueChange={(value) => updateSettings({ simplifiedMode: value })}
-                trackColor={{ false: '#CBD5E1', true: '#0EA5E9' }}
-                thumbColor={settings.simplifiedMode ? '#38BDF8' : '#64748B'}
-              />
-            </View>
-          </View>
-*/}
-          {/* 7.5 REPLAY TUTORIAL */}
           <TouchableOpacity onPress={handleReplayTutorial} className="bg-surface dark:bg-dark-surface p-5 mb-6 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm">
             <View className="flex-row flex-1 items-center overflow-hidden">
               <View className="bg-purple-50 dark:bg-purple-900/40 p-2.5 rounded-xl mr-4 border border-purple-100 dark:border-purple-700/60">
@@ -250,7 +196,6 @@ export default function ProfileScreen() {
             <ChevronRight size={20} color="#CBD5E1" />
           </TouchableOpacity>
 
-          {/* 8. DANGER ZONE */}
           <TouchableOpacity onPress={handleReset} className="bg-surface dark:bg-dark-surface p-5 mb-24 rounded-2xl flex-row items-center justify-between border border-border dark:border-dark-border shadow-sm">
             <View className="flex-row flex-1 items-center overflow-hidden">
               <View className="bg-red-50 dark:bg-red-900/40 p-2.5 rounded-xl mr-4 border border-red-100 dark:border-red-700/60">
@@ -266,7 +211,6 @@ export default function ProfileScreen() {
 
         </ScrollView>
 
-        {/* MODALS */}
         <VoiceSettingsModal visible={isVoiceModalVisible} onClose={() => setVoiceModalVisible(false)} />
         <EditProfileModal visible={isProfileModalVisible} onClose={() => setProfileModalVisible(false)} />
         <LanguageSettingsModal visible={isLanguageModalVisible} onClose={() => setLanguageModalVisible(false)} />
