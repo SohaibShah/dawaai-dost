@@ -11,7 +11,7 @@ try {
   console.log('[OCR] @react-native-ml-kit/text-recognition not available:', e);
 }
 
-const GOOGLE_API_KEY = "AIzaSyA0nKw0LB42ZPuNk9qygqjkMu_uvVsmtAw"; 
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || ""; 
 const GOOGLE_CV_URL = `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_API_KEY}`;
 
 export const OcrService = {
